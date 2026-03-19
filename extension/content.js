@@ -65,17 +65,46 @@ function extractOptions(el) {
 // 提取正确答案
 function extractAnswer(el) {
   const answerEl = el.querySelector('.t-answer .light');
-  if (!answerEl) {
-    // 判断题
-    const answerText = el.querySelector('.t-answer');
-    if (answerText) {
-      const text = answerText.textContent.trim();
-      if (text.includes('正确')) return '正确';
-      if (text.includes('错误')) return '错误';
-    }
-    return '';
+  if (answerEl) {
+    return answerEl.textContent.trim();
   }
-  return answerEl.textContent.trim();
+  // 判断题
+  const answerText = el.querySelector('.t-answer');
+  if (answerText) {
+    const text = answerText.textContent.trim();
+    if (text.includes('正确')) return '正确';
+    if (text.includes('错误')) return '错误';
+  }
+  return '';
+}
+
+// 提取解析
+function extractAnalysis(el) {
+  const analysisEl = el.querySelector('.t-analysis');
+  if (!analysisEl) return '';
+
+  const text = analysisEl.innerHTML;  // 用innerHTML才能保留<br>格式
+  if (!text) return '';
+
+  // 格式：答案：X<br>解析：XXX
+  // 或者只有解析：XXX
+  const parts = text.split('<br>');
+  let analysisText = '';
+
+  for (const part of parts) {
+    // 移除HTML标签
+    const cleanPart = part.replace(/<[^>]+>/g, '').trim();
+    if (cleanPart.startsWith('解析：')) {
+      analysisText = cleanPart.substring(3).trim();  // 去掉"解析："前缀
+      break;
+    }
+    if (cleanPart.startsWith('解析')) {
+      analysisText = cleanPart.substring(2).trim();
+      break;
+    }
+  }
+
+  return analysisText;
 }
 
 // 提取正确率
@@ -91,6 +120,7 @@ function parseTopicItem(el) {
   const type = extractType(el);
   const subject = extractSubject(el);
   const answer = extractAnswer(el);
+  const analysis = extractAnalysis(el);
   const score = extractScore(el);
   const level = extractLevel(el);
   const options = extractOptions(el);
@@ -105,7 +135,7 @@ function parseTopicItem(el) {
     type,
     subject,
     answer,
-    analysis: '',  // 暂无解析
+    analysis,
     score,
     level,
     optionA: options[0] || '',
