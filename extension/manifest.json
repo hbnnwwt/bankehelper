@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "网页数据爬虫",
+  "name": "云班课导出助手",
   "version": "1.0.0",
-  "description": "通过 CSS 选择器爬取网页数据并导出为 Excel",
+  "description": "云班课习题数据导出为 Excel 格式",
   "permissions": ["activeTab", "storage"],
   "action": {
     "default_popup": "popup.html",
