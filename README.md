@@ -1,0 +1,51 @@
+# 云班课导出助手
+
+Chrome 扩展，用于将云班课的习题数据导出为 Excel 格式，方便批量导入。
+
+## 功能特点
+
+- 通过 CSS 选择器灵活提取任意页面数据
+- 自动解析题型、题目、选项、答案、解析等字段
+- 数据预览功能，下载前确认
+- 导出格式兼容云班课导入模板
+
+## 安装
+
+1. 下载源码
+2. 打开 Chrome，访问 `chrome://extensions/`
+3. 开启右上角的「开发者模式」
+4. 点击「加载已解压的扩展程序」
+5. 选择 `extension` 文件夹
+
+## 使用方法
+
+1. 进入云班课统计分析页面
+2. 点击扩展图标，或按 `Ctrl+Shift+S`
+3. 输入 CSS 选择器（如 `.topic-item`）
+4. 点击「预览数据」确认
+5. 点击「下载 Excel」
+
+## 快捷键
+
+- `Ctrl+Shift+S` - 打开扩展 popup
+
+## 权限说明
+
+- `activeTab` - 访问当前标签页
+- `storage` - 保存上次使用的选择器
+
+## 文件结构
+
+```
+extension/
+├── manifest.json       # 扩展配置
+├── popup.html         # 弹窗界面
+├── popup.js           # UI 逻辑
+├── content.js         # 页面数据提取
+├── xlsx.full.min.js   # Excel 生成库
+└── icons/             # 图标
+```
+
+## License
+
+MIT
