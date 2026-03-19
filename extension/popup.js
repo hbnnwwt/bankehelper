@@ -1,5 +1,6 @@
-// 全局存储爬取的数据
+// 全局存储爬取的数据和文件名
 let scrapedData = [];
+let scrapedFileName = '';
 
 // 模板表头（对应 Excel 模板）
 const HEADERS = ['题型', '题干', '正确答案', '解析', '分值', '难度系数', 'A', 'B', 'C', 'D'];
@@ -113,7 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
     XLSX.utils.book_append_sheet(wb, ws, '习题');
 
     // 生成文件并下载
-    const filename = `爬取数据_${formatDate(new Date())}.xlsx`;
+    const baseName = scrapedFileName || `爬取数据_${formatDate(new Date())}`;
+    const filename = `${baseName}.xlsx`;
     XLSX.writeFile(wb, filename);
 
     resultDiv.className = 'success';
@@ -172,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 保存数据
       scrapedData = response.data;
+      scrapedFileName = response.fileName || '';
 
       // 显示结果
       resultDiv.className = 'success';

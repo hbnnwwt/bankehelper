@@ -116,6 +116,14 @@ function parseTopicItem(el) {
   };
 }
 
+// 提取文件名（从页面标题）
+function extractFileName() {
+  const infoCon = document.querySelector('.info-con');
+  if (!infoCon) return '';
+  const firstSpan = infoCon.querySelector('span:first-child');
+  return firstSpan ? firstSpan.textContent.trim() : '';
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'ping') {
     sendResponse({ ok: true });
@@ -144,7 +152,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const response = {
         data,
         count: total,
-        truncated: total > MAX_RESULTS
+        truncated: total > MAX_RESULTS,
+        fileName: extractFileName()
       };
 
       if (total > MAX_RESULTS) {
