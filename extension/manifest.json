@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "网页数据爬虫",
   "version": "1.0.0",
-  "description": "通过 CSS 选择器爬取网页数据并导出为 JSON",
-  "permissions": ["activeTab", "storage", "downloads"],
+  "description": "通过 CSS 选择器爬取网页数据并导出为 Excel",
+  "permissions": ["activeTab", "storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -11,9 +11,6 @@
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
-  },
-  "background": {
-    "service_worker": "background.js"
   },
   "content_scripts": [
     {
